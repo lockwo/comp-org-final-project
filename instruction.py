@@ -3,6 +3,7 @@ class Instruction:
     def __init__(self, instruct):
         self.counter = 0
         self.instruct = instruct
+        self.taken = False
         if len(instruct) > 3:
             instruction = instruct.split(' ')
             self.oper = instruction[0]
