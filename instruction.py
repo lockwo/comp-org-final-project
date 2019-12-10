@@ -1,11 +1,12 @@
 class Instruction:
 
-    def __init__(self, instruct):
+    def __init__(self, instruct, order):
         self.counter = 0
         self.instruct = instruct
         self.taken = False
         self.cycles=['.']*16
         self.pipe = ["IF", "ID", "EX", "MEM", "WB"]
+        self.order = order
         if len(instruct) > 3:
             instruction = instruct.split(' ')
             self.oper = instruction[0]
