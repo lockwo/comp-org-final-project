@@ -45,3 +45,6 @@ if __name__=='__main__':
             if i.counter != 5:
                 done = False
         total_cycles += 1
+
+    print("----------------------------------------------------------------------------------")
+    print("END OF SIMULATION")
