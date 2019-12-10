@@ -1,8 +1,15 @@
 import sys
 from file_read import file_read
+from branch import branch
+from forward import forward
+from no_forward import no_forward
+from update_regs import update_regs
+from print_cpu import print_cpu
+from instruction import Instruction
+
 
 if __name__=='__main__':
-    forward = sys.argv[1]
+    f = sys.argv[1]
 
     try:
         input_file = open(sys.argv[2], 'r')
@@ -10,11 +17,23 @@ if __name__=='__main__':
         print('Failed to open file\n')
         sys.exit()
     
-    s = []
-    t = []
+    s = [0 for i in range(8)]
+    t = [0 for i in range(10)]
     # all_instructs is just list of strings of the file per line, mainly just for Randy/Branching, feel free to modify it how you see fit
     instructs, all_instructs = file_read(input_file)
-
+    '''
     print(instructs, all_instructs)
     for i in instructs:
         print(i)
+    '''
+    done = False
+    total_cycles = 1
+    while ((not done) and (total_cycles <= 16)):
+        instructs = branch(instructs, all_instructs, total_cycles)
+        if f == "F":
+            instructs = forward(instructs, total_cycles)
+        else:
+            instructs = no_forward(instructs, total_cycles)
+        s, t = update_regs(instructs, total_cycles, s, t)
+        print_cpu(instructs, s, t)
+        total_cycles += 1
