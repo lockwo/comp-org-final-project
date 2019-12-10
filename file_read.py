@@ -3,7 +3,7 @@ from instruction import Instruction
 def file_read(f):
     full = []
     instruct = []
-    i = 0
+    i = 1
     for line in f:
         full.append(line.strip())
         if ':' not in line:
