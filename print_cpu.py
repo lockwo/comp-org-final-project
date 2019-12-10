@@ -7,10 +7,16 @@ def print_cpu(instructs, s, t, cycle):
         if (i.counter == 0) or (i.order > cycle):
             continue
         print(i.instruct, end='\t')
+        if (i.instruct == "nop"):
+            for j in range(16):
+                print(i.cycles[j], end='\t')
         for j in range(i.order-1):
             print(".", end='\t')
         for j in range(i.counter):
             print(i.pipe[j], end='\t')
+        if i.taken:
+            for j in range(i.taken_counter):
+                print("*", end='\t')
         for j in range(16-i.counter-i.order):
             print(".", end='\t')
         print()
