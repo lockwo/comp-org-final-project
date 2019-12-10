@@ -40,4 +40,8 @@ if __name__=='__main__':
             instructs = no_forward(instructs, total_cycles)
         s, t = update_regs(instructs, s, t)
         print_cpu(instructs, s, t, total_cycles)
+        done = True
+        for i in instructs:
+            if i.counter != 5:
+                done = False
         total_cycles += 1
