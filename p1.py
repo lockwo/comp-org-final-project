@@ -28,12 +28,16 @@ if __name__=='__main__':
     '''
     done = False
     total_cycles = 1
+    if f == "F":
+        print("START OF SIMULATION (forwarding)")
+    else:
+        print("START OF SIMULATION (no forwarding)")
     while ((not done) and (total_cycles <= 16)):
         instructs = branch(instructs, all_instructs, total_cycles)
         if f == "F":
             instructs = forward(instructs, total_cycles)
         else:
             instructs = no_forward(instructs, total_cycles)
-        s, t = update_regs(instructs, total_cycles, s, t)
-        print_cpu(instructs, s, t)
+        s, t = update_regs(instructs, s, t)
+        print_cpu(instructs, s, t, total_cycles)
         total_cycles += 1
