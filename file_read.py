@@ -7,7 +7,7 @@ def file_read(f):
     for line in f:
         full.append(line.strip())
         if ':' not in line:
-            instruct.append(Instruction(line.strip()), i)
+            instruct.append(Instruction(line.strip(), i))
             i += 1
 
     return instruct, full
