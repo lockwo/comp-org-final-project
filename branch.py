@@ -7,7 +7,7 @@ all_instructions = LIST OF ALL INPUT, INSTRUCTIONS AND LOOP HEADERS
 def branch(instructions, all_instructions, cycle_count, tregs, sregs):
     for i in range(len(instructions)):
         if instructions[i].oper == 'beq' or instructions[i].oper == 'bne':
-            instructions[i].counter = 4
+            #instructions[i].counter = 4
             # The branch value isn't evaluated until MEM stage (4th stage in datapath)
             if instructions[i].counter < 4:
                 continue
@@ -47,7 +47,7 @@ def branch(instructions, all_instructions, cycle_count, tregs, sregs):
                     # print(count)
                     instructions = instructions[0:i+1+count]
                     
-                    loop_title = instructions[i].r3.replace('\n', ':') + '\n'
+                    loop_title = instructions[i].r3 + ":"
                     # print(str(all_instructions))
                     # for j in range(i+1, len(instructions)):
                     #     if instructions[j].counter > 0:
@@ -60,13 +60,13 @@ def branch(instructions, all_instructions, cycle_count, tregs, sregs):
                         if ':' in all_instructions[j]:
                             continue
                         else:
-                            instructions.append(Instruction(all_instructions[j]))
+                            instructions.append(Instruction(all_instructions[j], len(instructions))) # THIS IS A TEMP FIX THAT NEEDS TO BE CHANGED
                     # print("here bitch")
                     # for j in range(len(instructions)):
                     #     print(instructions[j])
                     return instructions
     return instructions
-
+'''
 with open('p1-input03.txt', 'r') as input:
     a = input.readlines()
 b = []
@@ -83,3 +83,4 @@ s = [0, 0, 0, 0, 0, 0, 0, 0]
 
 print('------------------------\nSTARTING BRANCH\n------------------------\n')
 branch(b, a, 4, t, s)
+'''
