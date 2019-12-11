@@ -3,7 +3,7 @@ from instruction import Instruction
 
 def update_regs(instructs, s, t):
     for i in range(len(instructs)):
-        if instructs[i].counter != 5:
+        if instructs[i].counter != 5 or instructs[i].taken:
             continue
         if instructs[i].oper == "add":
             if instructs[i].r2[1] == "s":
