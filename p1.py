@@ -45,8 +45,8 @@ if __name__=='__main__':
         for i in instructs:
             if i.counter != 6:
                 done = False
-        if(done==False and instructs[len(instructs)-1].counter==5):
-            done=True
+        if(done == False and instructs[len(instructs)-1].counter == 5):
+            done = True
         total_cycles += 1
 
     print("----------------------------------------------------------------------------------")
