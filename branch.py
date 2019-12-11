@@ -12,24 +12,24 @@ def branch(instructions, all_instructions, cycle_count, tregs, sregs):
             if instructions[i].counter < 4:
                 continue
             else:
-                r1, r2 = instructions[i].r1, instructions[i].r2
-                # print(r1, r2)
+                r2, r3 = instructions[i].r2, instructions[i].r3
+                # print(r2, r3)
                 # checking whether it's $zero, t, or s register 
-                if r1[1] == 'z':
-                    r1 = 0
-                elif r1[1] == 't':
-                    r1 = tregs[int(r1[2])]
-                elif r1[1] == 's':
-                    r1 = sregs[int(r1[2])]
                 if r2[1] == 'z':
                     r2 = 0
                 elif r2[1] == 't':
                     r2 = tregs[int(r2[2])]
                 elif r2[1] == 's':
                     r2 = sregs[int(r2[2])]
-                # print(f'r1: {r1}, r2: {r2}')
+                if r3[1] == 'z':
+                    r3 = 0
+                elif r3[1] == 't':
+                    r3 = tregs[int(r3[2])]
+                elif r3[1] == 's':
+                    r3 = sregs[int(r3[2])]
+                # print(f'r2: {r2}, r3: {r3}')
 
-                if r1 == r2:
+                if r2 == r3:
                     # loop through instructions after the branch instruction and for all
                     # instructions that have started running, set taken to True to stop
                     count = 0
@@ -45,9 +45,10 @@ def branch(instructions, all_instructions, cycle_count, tregs, sregs):
                             count += 1
                     
                     # print(count)
+                    # change the instructions to the correct order w/ new branching
                     instructions = instructions[0:i+1+count]
-                    
-                    loop_title = instructions[i].r3 + ":"
+
+                    loop_title = instructions[i].r1 + ":"
                     # print(str(all_instructions))
                     # for j in range(i+1, len(instructions)):
                     #     if instructions[j].counter > 0:
