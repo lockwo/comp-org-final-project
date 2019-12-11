@@ -2,14 +2,17 @@ from instruction import Instruction
 
 def print_cpu(instructs, s, t, cycle):
     print("----------------------------------------------------------------------------------")
-    print("CPU Cycles ===>\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11\t12\t13\t14\t15\t16")
+    print("CPU Cycles ===>".ljust(20), end='')
+    for i in range(16):
+        print(str(i+1).ljust(4), end='')
+    print()
     for i in instructs:
         if(i.counter>0):
-            print(i.instruct, end='\t')
+            print(i.instruct.ljust(20), end='')
             for c in i.cycles:
-                print(c,end='\t')
+                print(c.ljust(4),end='')
             print()
-
+    print()
     # from https://stackoverflow.com/questions/8450472/how-to-print-a-string-in-fixed-width
     for i in range(len(s)):
         #print("I", i)
