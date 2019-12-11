@@ -6,6 +6,7 @@ all_instructions = LIST OF ALL INPUT, INSTRUCTIONS AND LOOP HEADERS
 '''
 def branch(instructions, all_instructions, cycle_count, tregs, sregs):
     for i in range(len(instructions)):
+        #print(instructions[i].oper, (instructions[i].oper == 'beq' and instructions[i].be == False) or (instructions[i].oper == 'bne' and instructions[i].be == False))
         if (instructions[i].oper == 'beq' and instructions[i].be == False) or (instructions[i].oper == 'bne' and instructions[i].be == False):
             # The branch value isn't evaluated until MEM stage (4th stage in datapath)
             if instructions[i].counter < 4:
@@ -42,9 +43,6 @@ def branch(instructions, all_instructions, cycle_count, tregs, sregs):
                             instructions[j].taken = True
                             count += 1
 
-                    # change the instructions to the correct order w/ new branching
-                    instructions = instructions[0:i+1+count]
-
                     loop_title = instructions[i].r1 + ":"
                     # loop through instructions after the jump header, and add them to the list of instructions
                     for j in range(all_instructions.index(loop_title), len(all_instructions)):
@@ -53,6 +51,7 @@ def branch(instructions, all_instructions, cycle_count, tregs, sregs):
                         else:
                             instructions.append(Instruction(all_instructions[j], len(instructions))) # THIS IS A TEMP FIX THAT NEEDS TO BE CHANGED
                     instructions[i].be = True
+                    #print(instructions[15])
                     return instructions
             elif instructions[i].counter > 4:
                 for j in range(len(instructions)):
@@ -71,13 +70,11 @@ for i in range(len(a)):
     print(a[i], end='')
     if '$' in a[i]:
         b.append(Instruction(a[i]))
-
 # print("here")
 # for i in range(len(b)):
 #     print(b[i], end='')
 t = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 s = [0, 0, 0, 0, 0, 0, 0, 0]
-
 print('------------------------\nSTARTING BRANCH\n------------------------\n')
 branch(b, a, 4, t, s)
 '''
