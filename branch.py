@@ -6,13 +6,13 @@ all_instructions = LIST OF ALL INPUT, INSTRUCTIONS AND LOOP HEADERS
 '''
 def branch(instructions, all_instructions, cycle_count, tregs, sregs):
     for i in range(len(instructions)):
-        if instructions[i].oper == 'beq' or instructions[i].oper == 'bne':
+        if (instructions[i].oper == 'beq' and instructions[i].be == False) or (instructions[i].oper == 'bne' and instructions[i].be == False):
             # The branch value isn't evaluated until MEM stage (4th stage in datapath)
             if instructions[i].counter < 4:
                 continue
-            elif instructions[i] == 4:
+            elif instructions[i].counter == 4:
                 r2, r3 = instructions[i].r2, instructions[i].r3
-                # checking whether it's $zero, t, or s register 
+                # checking whether it's $zero, t, or s register
                 if r2[1] == 'z':
                     r2 = 0
                 elif r2[1] == 't':
@@ -25,8 +25,10 @@ def branch(instructions, all_instructions, cycle_count, tregs, sregs):
                     r3 = tregs[int(r3[2])]
                 elif r3[1] == 's':
                     r3 = sregs[int(r3[2])]
-
-                if r2 == r3:
+####################################################################################################
+##DO DIFFERENT THINGS FOR BNE AND BEQ
+####################################################################################################
+                if (instructions[i].oper == 'beq' and r2 == r3) or (instructions[i].oper == 'bne' and r2 != r3):
                     # loop through instructions after the branch instruction and for all
                     # instructions that have started running, set taken to True to stop
                     count = 0
@@ -34,13 +36,12 @@ def branch(instructions, all_instructions, cycle_count, tregs, sregs):
                     #DEBUGGING CODE
                     # for j in range(i+1, i+4):
                     #     instructions[j].counter += 1
-                    
                     # Count the number of instructions that have started pipelining after the branch instruction
                     for j in range(i + 1, len(instructions)):
                         if (instructions[j].counter > 0):
                             instructions[j].taken = True
                             count += 1
-                    
+
                     # change the instructions to the correct order w/ new branching
                     instructions = instructions[0:i+1+count]
 
@@ -51,8 +52,9 @@ def branch(instructions, all_instructions, cycle_count, tregs, sregs):
                             continue
                         else:
                             instructions.append(Instruction(all_instructions[j], len(instructions))) # THIS IS A TEMP FIX THAT NEEDS TO BE CHANGED
+                    instructions[i].be = True
                     return instructions
-            elif instructions[i] > 4:
+            elif instructions[i].counter > 4:
                 for j in range(len(instructions)):
                     if instructions[j].taken:
                         if (instructions[j].counter + instructions[j].taken_counter) == 5:
