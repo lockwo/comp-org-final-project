@@ -41,9 +41,12 @@ if __name__=='__main__':
         s, t = update_regs(instructs, s, t)
         print_cpu(instructs, s, t, total_cycles)
         done = True
+        done = True
         for i in instructs:
-            if i.counter != 5:
+            if i.counter != 6:
                 done = False
+        if(done==False and instructs[len(instructs)-1].counter==5):
+            done=True
         total_cycles += 1
 
     print("----------------------------------------------------------------------------------")
