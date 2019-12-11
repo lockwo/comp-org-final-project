@@ -23,7 +23,7 @@ def no_forward(instructs, total_cycles):
         elif(not found and instructs[i].counter==0):
             instructs[i].cycles[clock]='IF'
             found=True
-            instructs[i].counter+=1;
+            instructs[i].counter+=1
         #if it is on the IF STEP, check whether or not the ID stage is in use
         elif(instructs[i].counter==1):
             if(i>0 and instructs[i-1].cycles[clock]=='ID' ):
@@ -32,7 +32,7 @@ def no_forward(instructs, total_cycles):
             else:
                 #move to id stage if it is not in use
                 instructs[i].cycles[clock]='ID'
-                instructs[i].counter+=1;
+                instructs[i].counter+=1
         #on ID stage, determine wheter to insert stalls or move on to the EX stage
         elif instructs[i].counter==2:
             index2=i-2-instructs[i].nopCount-instructs[i-1].nopCount
@@ -43,7 +43,7 @@ def no_forward(instructs, total_cycles):
                 instructs[i].cycles[clock]='ID'
                 instructs[i].nopCount+=1
                 #create a nop to insert
-                temp=Instruction("nop")
+                temp=Instruction("nop",instructs[i].order)
                 temp.cycles=instructs[i].cycles.copy()
                 temp.cycles[clock]='*'
                 temp.counter=3
@@ -56,7 +56,7 @@ def no_forward(instructs, total_cycles):
                 instructs[i].cycles[clock]='ID'
                 instructs[i].nopCount+=1
                 #create a nop to insert
-                temp=Instruction("nop")
+                temp=Instruction("nop",instructs[i].order)
                 temp.cycles=instructs[i].cycles.copy()
                 temp.cycles[clock]='*'
                 temp.counter=3
@@ -65,50 +65,16 @@ def no_forward(instructs, total_cycles):
                 i+=1
             else:
                 instructs[i].cycles[clock]='EX'
-                instructs[i].counter+=1;
+                instructs[i].counter+=1
         elif instructs[i].counter==3:
             instructs[i].cycles[clock]='MEM'
-            instructs[i].counter+=1;
+            instructs[i].counter+=1
         elif instructs[i].counter==4:
             instructs[i].cycles[clock]='WB'
-            instructs[i].counter+=1;
+            instructs[i].counter+=1
         elif instructs[i].counter==5:
-            instructs[i].counter+=1;
-        i+=1;
+            instructs[i].counter+=1
+        i+=1
     return instructs
 
-f=open("test.txt")
-d=f.read()
-d=d.split('\n')
-d.remove('')
-list=[]
-for c in d:
-    list.append(Instruction(c))
-z=1;
-while z<=16:
-    list=no_forward(list,z)
-    for x in list:
-        print(x.instruct,"\t",end="")
-        for y in x.cycles:
-            if(len(y)==3):
-                print(y,"",end="")
-            elif(len(y)==2):
-                print(y," ",end="")
-            elif(len(y)==1):
-                print(y,"  ",end="")
-            print("  ",end="")
-        print()
-    print()
-    z+=1
 
-for x in list:
-    print(x.instruct,"\t",end="")
-    for y in x.cycles:
-        if(len(y)==3):
-            print(y,"",end="")
-        elif(len(y)==2):
-            print(y," ",end="")
-        elif(len(y)==1):
-            print(y,"  ",end="")
-        print("  ",end="")
-    print()
