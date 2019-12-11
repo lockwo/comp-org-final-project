@@ -33,7 +33,7 @@ if __name__=='__main__':
     else:
         print("START OF SIMULATION (no forwarding)")
     while ((not done) and (total_cycles <= 16)):
-        instructs = branch(instructs, all_instructs, total_cycles)
+        instructs = branch(instructs, all_instructs, total_cycles, t, s)
         if f == "F":
             instructs = forward(instructs, total_cycles)
         else:
