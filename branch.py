@@ -7,13 +7,11 @@ all_instructions = LIST OF ALL INPUT, INSTRUCTIONS AND LOOP HEADERS
 def branch(instructions, all_instructions, cycle_count, tregs, sregs):
     for i in range(len(instructions)):
         if instructions[i].oper == 'beq' or instructions[i].oper == 'bne':
-            #instructions[i].counter = 4
             # The branch value isn't evaluated until MEM stage (4th stage in datapath)
             if instructions[i].counter < 4:
                 continue
-            else:
+            elif instructions[i] == 4:
                 r2, r3 = instructions[i].r2, instructions[i].r3
-                # print(r2, r3)
                 # checking whether it's $zero, t, or s register 
                 if r2[1] == 'z':
                     r2 = 0
@@ -27,7 +25,6 @@ def branch(instructions, all_instructions, cycle_count, tregs, sregs):
                     r3 = tregs[int(r3[2])]
                 elif r3[1] == 's':
                     r3 = sregs[int(r3[2])]
-                # print(f'r2: {r2}, r3: {r3}')
 
                 if r2 == r3:
                     # loop through instructions after the branch instruction and for all
@@ -35,8 +32,8 @@ def branch(instructions, all_instructions, cycle_count, tregs, sregs):
                     count = 0
 
                     #DEBUGGING CODE
-                    for j in range(i+1, i+4):
-                        instructions[j].counter += 1
+                    # for j in range(i+1, i+4):
+                    #     instructions[j].counter += 1
                     
                     # Count the number of instructions that have started pipelining after the branch instruction
                     for j in range(i + 1, len(instructions)):
@@ -44,28 +41,25 @@ def branch(instructions, all_instructions, cycle_count, tregs, sregs):
                             instructions[j].taken = True
                             count += 1
                     
-                    # print(count)
                     # change the instructions to the correct order w/ new branching
                     instructions = instructions[0:i+1+count]
 
                     loop_title = instructions[i].r1 + ":"
-                    # print(str(all_instructions))
-                    # for j in range(i+1, len(instructions)):
-                    #     if instructions[j].counter > 0:
-                    #         instructions.append(instructions[j])
-                    # print('=======================================')
-                    # for j in range(len(instructions)):
-                    #     print(instructions[j])
-                    # print('=======================================')
+                    # loop through instructions after the jump header, and add them to the list of instructions
                     for j in range(all_instructions.index(loop_title), len(all_instructions)):
                         if ':' in all_instructions[j]:
                             continue
                         else:
                             instructions.append(Instruction(all_instructions[j], len(instructions))) # THIS IS A TEMP FIX THAT NEEDS TO BE CHANGED
-                    # print("here bitch")
-                    # for j in range(len(instructions)):
-                    #     print(instructions[j])
                     return instructions
+            elif instructions[i] > 4:
+                for j in range(len(instructions)):
+                    if instructions[j].taken:
+                        if (instructions[j].counter + instructions[j].taken_counter) == 5:
+                            continue
+                        else:
+                            instructions[j].taken_counter += 1
+                return instructions
     return instructions
 '''
 with open('p1-input03.txt', 'r') as input:
