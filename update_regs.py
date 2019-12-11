@@ -48,7 +48,7 @@ def update_regs(instructs, s, t):
                 v2 = t[int(instructs[i].r3[2])]
             else:
                 v2 = 0
-            vale = v1 & v2
+            vale = int(v1 & v2)
             if instructs[i].r1[1] == "s":
                 s[int(instructs[i].r1[2])] = vale
             else:
@@ -60,7 +60,7 @@ def update_regs(instructs, s, t):
                 v1 = t[int(instructs[i].r2[2])]
             else:
                 v1 = 0
-            vale = v1 & int(instructs[i].r3)
+            vale = int(v1 & int(instructs[i].r3))
             if instructs[i].r1[1] == "s":
                 s[int(instructs[i].r1[2])] = vale
             else:
@@ -78,7 +78,7 @@ def update_regs(instructs, s, t):
                 v2 = t[int(instructs[i].r3[2])]
             else:
                 v2 = 0
-            vale = v1 | v2
+            vale = int(v1 | v2)
             if instructs[i].r1[1] == "s":
                 s[int(instructs[i].r1[2])] = vale
             else:
@@ -90,7 +90,7 @@ def update_regs(instructs, s, t):
                 v1 = t[int(instructs[i].r2[2])]
             else:
                 v1 = 0
-            vale = v1 | int(instructs[i].r3)
+            vale = int(v1 | int(instructs[i].r3))
             if instructs[i].r1[1] == "s":
                 s[int(instructs[i].r1[2])] = vale
             else:
@@ -108,7 +108,7 @@ def update_regs(instructs, s, t):
                 v2 = t[int(instructs[i].r3[2])]
             else:
                 v2 = 0
-            vale = v1 < v2
+            vale = int(v1 < v2)
             if instructs[i].r1[1] == "s":
                 s[int(instructs[i].r1[2])] = vale
             else:
@@ -120,7 +120,7 @@ def update_regs(instructs, s, t):
                 v1 = t[int(instructs[i].r2[2])]
             else:
                 v1 = 0
-            vale = v1 < int(instructs[i].r3)
+            vale = int(v1 < int(instructs[i].r3))
             if instructs[i].r1[1] == "s":
                 s[int(instructs[i].r1[2])] = vale
             else:
