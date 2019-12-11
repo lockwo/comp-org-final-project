@@ -76,5 +76,3 @@ def no_forward(instructs, total_cycles):
             instructs[i].counter+=1
         i+=1
     return instructs
-
-
