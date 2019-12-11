@@ -8,6 +8,7 @@ class Instruction:
         self.cycles=['.']*16
         self.pipe = ["IF", "ID", "EX", "MEM", "WB"]
         self.order = order
+        self.nopCount=0
         if len(instruct) > 3:
             instruction = instruct.split(' ')
             self.oper = instruction[0]
