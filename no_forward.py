@@ -2,9 +2,8 @@ from instruction import Instruction
 
 
 def no_forward(instructs, total_cycles):
-    def no_forward(instructs, total_cycles):
     #finds the first instruction that has
-    found=False;
+    found=False
     clock=total_cycles-1
     i=0
     while i<len(instructs):
