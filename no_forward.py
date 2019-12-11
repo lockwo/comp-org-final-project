@@ -16,14 +16,14 @@ def no_forward(instructs, total_cycles):
         elif(not found and instructs[i].counter==0):
             instructs[i].cycles[clock]='IF'
             found=True
-            instructs[i].counter+=1;
+            instructs[i].counter+=1
         #if it is on the IF STEP
         elif(instructs[i].counter==1):
             if(i>0 and instructs[i-1].cycles[clock]=='ID' ):
                 instructs[i].cycles[clock]='IF'
             else:
                 instructs[i].cycles[clock]='ID'
-                instructs[i].counter+=1;
+                instructs[i].counter+=1
         elif instructs[i].counter==2:
             index2=i-2-instructs[i].nopCount-instructs[i-1].nopCount
             index=i-1-instructs[i].nopCount-instructs[i-1].nopCount
@@ -47,14 +47,14 @@ def no_forward(instructs, total_cycles):
                 i+=1
             else:
                 instructs[i].cycles[clock]='EX'
-                instructs[i].counter+=1;
+                instructs[i].counter+=1
         elif instructs[i].counter==3:
             instructs[i].cycles[clock]='MEM'
-            instructs[i].counter+=1;
+            instructs[i].counter+=1
         elif instructs[i].counter==4:
             instructs[i].cycles[clock]='WB'
-            instructs[i].counter+=1;
+            instructs[i].counter+=1
         elif instructs[i].counter==5:
-            instructs[i].counter+=1;
-        i+=1;
+            instructs[i].counter+=1
+        i+=1
     return instructs
