@@ -4,6 +4,7 @@ class Instruction:
         self.counter = 0
         self.instruct = instruct
         self.taken = False
+        self.be = False
         self.taken_counter = 0 # INCREMENT THIS EVER TIME YOU ITERATE OVER A TAKEN INSTRUCTION
         self.cycles=['.']*16
         self.pipe = ["IF", "ID", "EX", "MEM", "WB"]
